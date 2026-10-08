@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Study Sprint Board</title>
+</head>
+
+<body class="min-h-screen bg-slate-100 text-slate-900">
+  <div class="mx-auto max-w-6xl space-y-6 p-4 sm:p-6">
+    <header class="flex flex-wrap items-start justify-between gap-3">
+      <div>
+        <h1 class="text-2xl font-bold sm:text-3xl">Study Sprint Board</h1>
+        <p class="text-sm text-slate-600">
+          Plan your study tasks and move them from To Do to Done.
+        </p>
+      </div>
+      <button id="reset-btn" type="button"
+        class="rounded-md border border-slate-300 bg-white px-3 py-1.5 text-sm font-medium hover:bg-slate-50">
+        Reset Board
+      </button>
+    </header>
+
+    <section aria-labelledby="progress-title" class="rounded-lg bg-white p-4 shadow-sm ring-1 ring-slate-200">
+      <h2 id="progress-title" class="text-lg font-semibold">Progress</h2>
+      <dl class="mt-3 grid grid-cols-2 gap-3 text-center sm:grid-cols-4">
+        <div class="rounded-md bg-slate-50 p-3 ring-1 ring-slate-200">
+          <dt class="text-xs text-slate-600">Total</dt>
+          <dd id="stat-total" class="text-2xl font-bold">0</dd>
+        </div>
+        <div class="rounded-md bg-slate-50 p-3 ring-1 ring-slate-200">
+          <dt class="text-xs text-slate-600">To Do</dt>
+          <dd id="stat-todo" class="text-2xl font-bold">0</dd>
+        </div>
+        <div class="rounded-md bg-slate-50 p-3 ring-1 ring-slate-200">
+          <dt class="text-xs text-slate-600">In Progress</dt>
+          <dd id="stat-doing" class="text-2xl font-bold">0</dd>
+        </div>
+        <div class="rounded-md bg-slate-50 p-3 ring-1 ring-slate-200">
+          <dt class="text-xs text-slate-600">Done</dt>
+          <dd id="stat-done" class="text-2xl font-bold">0</dd>
+        </div>
+      </dl>
+      <div class="mt-4">
+        <div class="flex justify-between text-sm">
+          <span>Completion</span>
+          <span id="stat-percent" class="font-medium">0%</span>
+        </div>
+        <div id="progress" role="progressbar" aria-label="Completion" aria-valuemin="0" aria-valuemax="100"
+          aria-valuenow="0" class="mt-1 h-3 overflow-hidden rounded-full bg-slate-200">
+          <div id="progress-bar" class="h-full bg-green-500 transition-all" style="width: 0%"></div>
+        </div>
+      </div>
+    </section>
+
+    <section aria-labelledby="form-heading" class="rounded-lg bg-white p-4 shadow-sm ring-1 ring-slate-200">
+      <h2 id="form-heading" class="text-lg font-semibold">Add task</h2>
+      <form id="task-form" novalidate
+        class="mt-3 grid gap-3 sm:grid-cols-2 lg:grid-cols-[2fr_1fr_1fr_auto] lg:items-start">
+        <div>
+          <label for="title-input" class="block text-sm font-medium">Title</label>
+          <input id="title-input" type="text" maxlength="80" autocomplete="off" aria-describedby="title-error"
+            aria-invalid="false" class="mt-1 w-full rounded-md border border-slate-300 px-3 py-2 text-sm" />
+          <p id="title-error" role="alert" class="mt-1 hidden text-sm text-red-700"></p>
+        </div>
+        <div>
+          <label for="subject-input" class="block text-sm font-medium">Subject</label>
+          <input id="subject-input" type="text" maxlength="40" autocomplete="off" aria-describedby="subject-error"
+            aria-invalid="false" class="mt-1 w-full rounded-md border border-slate-300 px-3 py-2 text-sm" />
+          <p id="subject-error" role="alert" class="mt-1 hidden text-sm text-red-700"></p>
+        </div>
+        <div>
+          <label for="priority-input" class="block text-sm font-medium">Priority</label>
+          <select id="priority-input" class="mt-1 w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm">
+            <option value="low">Low</option>
+            <option value="medium" selected>Medium</option>
+            <option value="high">High</option>
+          </select>
+        </div>
+        <div class="flex gap-2 sm:col-span-2 lg:col-span-1 lg:mt-6">
+          <button id="submit-btn" type="submit"
+            class="rounded-md bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-700">
+            Add task
+          </button>
+          <button id="cancel-btn" type="button"
+            class="hidden rounded-md border border-slate-300 bg-white px-4 py-2 text-sm font-medium hover:bg-slate-50">
+            Cancel
+          </button>
+        </div>
+      </form>
+    </section>
+
+    <section aria-label="Search and filters" class="rounded-lg bg-white p-4 shadow-sm ring-1 ring-slate-200">
+      <div class="grid gap-3 sm:grid-cols-[1fr_auto_auto] sm:items-end">
+        <div>
+          <label for="search-input" class="block text-sm font-medium">Search</label>
+          <input id="search-input" type="search" autocomplete="off" placeholder="Title or subject"
+            class="mt-1 w-full rounded-md border border-slate-300 px-3 py-2 text-sm" />
+        </div>
+        <div>
+          <label for="priority-filter" class="block text-sm font-medium">Priority</label>
+          <select id="priority-filter"
+            class="mt-1 w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm">
+            <option value="all">All</option>
+            <option value="low">Low</option>
+            <option value="medium">Medium</option>
+            <option value="high">High</option>
+          </select>
+        </div>
+        <button id="clear-filters" type="button" disabled
+          class="rounded-md border border-slate-300 bg-white px-3 py-2 text-sm font-medium hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-50">
+          Clear Filters
+        </button>
+      </div>
+      <p id="filter-status" class="mt-2 text-sm text-slate-600" aria-live="polite"></p>
+    </section>
+
+    <main id="board" class="grid gap-4 md:grid-cols-3"></main>
+  </div>
+
+  <script type="module" src="/src/main.js"></script>
+</body>
+
+</html>
